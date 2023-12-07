@@ -1,6 +1,3 @@
-//這邊必須要async funciton 因為python返回需要時間，而JS 又不會block，
-//所以需要用async function 加上await去呼叫PY function
-
 function checkAndRedirect() {
     var result = "" 
 
