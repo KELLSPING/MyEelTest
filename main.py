@@ -21,6 +21,10 @@ import eel
 import json
 import random
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
 @eel.expose
 def app_start():   
     eel.init('web') #
