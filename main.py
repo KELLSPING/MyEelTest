@@ -1,6 +1,14 @@
 import eel
 
-# 這裡寫上你要的function 
+@eel.expose
+def strAdd(str):      
+    str = str + " and return words"     
+    return f'{str}'
 
-eel.init('web') # eel.init(網頁的資料夾)
-eel.start('login.html',size = (800,600)) #eel.start(html名稱, size=(起始大小))
+@eel.expose
+def app_start():   
+    eel.init('web') #
+    eel.start('login.html',size = (800,600))
+
+if __name__ ==  '__main__':
+    app_start()
