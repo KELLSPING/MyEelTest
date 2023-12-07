@@ -16,8 +16,8 @@ select, input[type="text"] {
     box-sizing: border-box;
 }
 
-option[hidden] {
-    color: gray;
+#pError {
+    color: red;
 }
 
 
