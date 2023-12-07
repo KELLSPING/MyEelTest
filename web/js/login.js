@@ -3,10 +3,6 @@
 
 async function checkAndRedirect() {
     var result = "" 
-    
-    //最後將返回的值設定在HTML上的<p>內
-    document.getElementById('pError').innerText  = result
-
 
     var inputName = document.getElementById("nameInput").value;
     var selectLang = document.getElementById("dropdown").value;
@@ -21,6 +17,6 @@ async function checkAndRedirect() {
         result = "\"Language\" is empty."
         document.getElementById('pError').innerText  = result
     } else {
-        window.location.href = "chat.html?selectedOption=" + encodeURIComponent(selectLang) + "&textInputValue=" + encodeURIComponent(inputName);
+        window.location.href = "chat.html?userLangSelect=" + encodeURIComponent(selectLang) + "&userInputName=" + encodeURIComponent(inputName);
     }
 }
