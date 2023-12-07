@@ -2,7 +2,7 @@ import eel
 
 @eel.expose
 def strAdd(str):      
-    str = str + " and return words"     
+    str = str + " Return."     
     return f'{str}'
 
 @eel.expose
