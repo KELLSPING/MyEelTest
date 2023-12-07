@@ -25,15 +25,20 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-@eel.expose
-def process_user_input(user_input_name, user_lang_select):
-    print(f"User input name: {user_input_name}")
-    print(f"User language selection: {user_lang_select}")
+userName = ""
+userLang = ""
+
+r = sr.Recognizer()
+mic = sr.Microphone()
 
 @eel.expose
-def app_start():   
-    r = sr.Recognizer()
-    mic = sr.Microphone()
+def process_user_input(user_input_name, user_lang_select):
+    global userName
+    global userLang
+    userName = user_input_name
+    userLang = user_lang_select
+    print(f"User input name: {user_input_name}")
+    print(f"User language selection: {user_lang_select}")
     
 @eel.expose
 def app_init():
@@ -42,4 +47,3 @@ def app_init():
 
 if __name__ ==  '__main__':
     app_init()
-    app_start()
