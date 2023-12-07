@@ -32,8 +32,14 @@ def process_user_input(user_input_name, user_lang_select):
 
 @eel.expose
 def app_start():   
+    r = sr.Recognizer()
+    mic = sr.Microphone()
+    
+@eel.expose
+def app_init():
     eel.init('web') #
-    eel.start('login.html',size = (800,600))
+    eel.start('login.html',size = (800,600)) 
 
 if __name__ ==  '__main__':
+    app_init()
     app_start()
