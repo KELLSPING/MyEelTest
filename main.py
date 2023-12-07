@@ -26,6 +26,11 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 @eel.expose
+def process_user_input(user_input_name, user_lang_select):
+    print(f"User input name: {user_input_name}")
+    print(f"User language selection: {user_lang_select}")
+
+@eel.expose
 def app_start():   
     eel.init('web') #
     eel.start('login.html',size = (800,600))

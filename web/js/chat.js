@@ -6,6 +6,8 @@ const userLangSelect = urlParams.get('userLangSelect');
 document.getElementById('txtName').innerText  = userInputName;
 document.getElementById('txtLanguage').innerText  = userLangSelect;
 
+eel.process_user_input(userInputName, userLangSelect);
+
 // 頁面載入完成後，直接觸發一次點擊事件，以改變初始顏色
 //document.addEventListener('DOMContentLoaded', function() {
 //    send_audio();
