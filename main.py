@@ -1,0 +1,6 @@
+import eel
+
+# 這裡寫上你要的function 
+
+eel.init('web') # eel.init(網頁的資料夾)
+eel.start('index.html',size = (600,400)) #eel.start(html名稱, size=(起始大小))
