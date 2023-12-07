@@ -21,7 +21,6 @@ async function checkAndRedirect() {
         result = "\"Language\" is empty."
         document.getElementById('pError').innerText  = result
     } else {
-        result = "Great"
-        document.getElementById('pError').innerText  = result
+        window.location.href = "chat.html?selectedOption=" + encodeURIComponent(selectLang) + "&textInputValue=" + encodeURIComponent(inputName);
     }
 }
