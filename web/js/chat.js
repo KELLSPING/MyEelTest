@@ -62,6 +62,13 @@ async function send_message(){
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   }
+
+
+
+eel.expose(close_browser);
+function close_browser(){
+    window.close()
+}
   
   
   function mouseDown(){
