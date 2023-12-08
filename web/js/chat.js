@@ -8,10 +8,18 @@ document.getElementById('txtLanguage').innerText  = userLangSelect;
 
 eel.process_user_input(userInputName, userLangSelect);
 
-// 頁面載入完成後，直接觸發一次點擊事件，以改變初始顏色
-//document.addEventListener('DOMContentLoaded', function() {
-//    send_audio();
-//});
+// right key forbidden
+document.oncontextmenu = new Function("return false");
+oncontextmenu="return flase;"
+
+// 鍵盤監聽
+document.onkeydown = function(e){
+  var keyNum =window.event ? e.keyCode : e.which;
+  //Enter press
+  if (keyNum == 13){
+    send_message();
+  }
+}
 
 // 這邊必須要async funciton 因為python返回需要時間，而JS 又不會block，
 // 所以需要用async function 加上await去呼叫PY function
