@@ -87,9 +87,7 @@ class Recorder:
         self._running = False
 
     def save(self):
-
         p = pyaudio.PyAudio()
-
         wf = wave.open("tmp.wav", 'wb')
         wf.setnchannels(self.CHANNELS)
         wf.setsampwidth(p.get_sample_size(self.FORMAT))
@@ -175,7 +173,6 @@ def on_release():
 def close_login():
     global userName
     print('Bye login.html!')
-    # db.collection('chatroom').document(userName).delete()
     time.sleep(1)
         
 @eel.expose
