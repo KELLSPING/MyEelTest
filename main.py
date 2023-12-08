@@ -75,14 +75,14 @@ def get_message(message):
         
     else:
         loc_dt = datetime.today()
-        f_loc_dt = loc_dt.strftime("%Y:%m:%d:%H:%M:%S")
+        f_loc_dt = loc_dt.strftime("%Y:%m:%d %H:%M:%S")
         print("[" + f_loc_dt + "] " + userName + " : " + message)
         student1 = db.collection('chatroom').document(userName)
         student1.set({
             'message': tempMsg,
             'time':loc_dt.strftime("%Y:%m:%d:%H:%M:%S")
         })
-        eel.update('['+f_loc_dt+']'+' '+userName+':'+message)
+        eel.update('[ '+f_loc_dt+' ]'+' '+userName+' : '+message)
     
     
     
