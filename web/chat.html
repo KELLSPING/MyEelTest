@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web 聊天室</title>
+    <title>ChatRoom</title>
     <!-- 引用 CSS 檔案 -->
     <link rel="stylesheet" href="./css/chat.css">
 </head>
@@ -17,9 +17,9 @@
       <div id="chat-messages">
       </div>
       <div id="input-container">
-        <input type="text" id="message-input" placeholder="輸入訊息...">
-        <button id="btn-send-msg" onclick="send_message()">發送</button>
-        <button id="btn-send-audio" onmousedown="mouseDown()" onmouseup="mouseUp()">
+        <input type="text" id="message-input" placeholder="Message...">
+        <button id="btn-send-msg" onclick="send_message()">SEND</button>
+        <button id="btn-send-audio" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()">
           <img class="icon" src="./image/mic.png" alt="圖片">
         </button>
       </div>

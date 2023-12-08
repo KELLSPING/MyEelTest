@@ -11,7 +11,7 @@ eel.process_user_input(userInputName, userLangSelect);
 
 // right key forbidden
 document.oncontextmenu = new Function("return false");
-oncontextmenu = "return flase;";
+oncontextmenu = "return false;";
 
 // 鍵盤監聽
 document.onkeydown = function (e) {
