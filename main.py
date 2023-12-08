@@ -175,7 +175,7 @@ def close_callback(route, websockets):
 def app_init():
     global port
     eel.init('web')
-    eel.start('login.html', size=(800,600), port=port, mode='chrome-app', close_callback=close_callback)
+    eel.start('login.html', size=(800,600), port=port, mode='chrome-app')
 
 if __name__ ==  '__main__':
     app_init()
