@@ -113,11 +113,11 @@ def nameAlreadyExist(name):
     for i in lst_id:
         print(lst_id)
         if i == name:
-            print("true")
+            print("Duplicate name")
             return True
-    print("false")
+    print("Good naming")
     return False
-    
+
     
 @eel.expose
 def get_message(message):
@@ -175,7 +175,7 @@ def on_release():
 def close_login():
     global userName
     print('Bye login.html!')
-    db.collection('chatroom').document(userName).delete()
+    # db.collection('chatroom').document(userName).delete()
     time.sleep(1)
         
 @eel.expose
