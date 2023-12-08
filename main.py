@@ -51,6 +51,51 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+
+class Recorder:
+    def __init__(self, chunk=1024, channels=1, rate=16000):
+        self.CHUNK = chunk
+        self.FORMAT = pyaudio.paInt16
+        self.CHANNELS = channels
+        self.RATE = rate
+        self._running = True
+        self._frames = []
+
+    def start(self):
+        threading._start_new_thread(self.__recording, ())
+
+    def __recording(self):
+        self._running = True
+        self._frames = []
+        p = pyaudio.PyAudio()
+        stream = p.open(format=self.FORMAT,
+                        channels=self.CHANNELS,
+                        rate=self.RATE,
+                        input=True,
+                        frames_per_buffer=self.CHUNK)
+        while self._running:
+            data = stream.read(self.CHUNK)
+            self._frames.append(data)
+
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+
+    def stop(self):
+        self._running = False
+
+    def save(self):
+
+        p = pyaudio.PyAudio()
+
+        wf = wave.open("tmp.wav", 'wb')
+        wf.setnchannels(self.CHANNELS)
+        wf.setsampwidth(p.get_sample_size(self.FORMAT))
+        wf.setframerate(self.RATE)
+        wf.writeframes(b''.join(self._frames))
+        wf.close()
+
+
 @eel.expose
 def process_user_input(user_input_name, user_lang_select):
     global userName
@@ -84,18 +129,34 @@ def get_message(message):
         })
         eel.update('[' + f_loc_dt + ']' + ' ' + userName + ' : ' + message)
         
+def recordtext():
+    global r,mic
+    with sr.WavFile("tmp.wav") as source:    #read WAV files
+        r.adjust_for_ambient_noise(source)
+        audio = r.record(source)
+        try:
+            text = r.recognize_google(audio,language = userLang)
+            print(text)
+            return text
+        except :
+            print ("Could not understand audio")
+
+re = Recorder()
+
 @eel.expose
 def on_press():
+    global re
     print("Record button pressed")
-    # re.start()
+    re.start()
 
 @eel.expose
 def on_release():
+    global re
     print("Record button released")
-    # re.stop()
-    # re.save()
-    # t=recordtext()
-    # eel.showText(t)
+    re.stop()
+    re.save()
+    t=recordtext()
+    eel.showText(t)
     
     
     
