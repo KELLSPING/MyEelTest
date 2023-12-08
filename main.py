@@ -106,6 +106,17 @@ def process_user_input(user_input_name, user_lang_select):
     userLang = user_lang_select
     print(f"User input name: {user_input_name}")
     print(f"User language selection: {user_lang_select}")
+
+@eel.expose   
+def nameAlreadyExist(name):
+    lst_id=[i.id for i in db.collection('chatroom').get()]
+    for i in lst_id:
+        print(lst_id)
+        if i == name:
+            print("true")
+            return True
+    print("false")
+    return False
     
     
 @eel.expose
@@ -165,14 +176,14 @@ def close_login():
     global userName
     print('Bye login.html!')
     db.collection('chatroom').document(userName).delete()
-    time.sleep(2)
+    time.sleep(1)
         
 @eel.expose
 def close_chat():
     global userName
     print('Bye chat.html!')
     db.collection('chatroom').document(userName).delete()
-    time.sleep(2)
+    time.sleep(1)
 
 @eel.expose
 def app_init():
