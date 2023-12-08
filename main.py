@@ -160,13 +160,22 @@ def on_release():
     t=recordtext()
     eel.showText(t)
 
+def close_callback(route, websockets):
+    global userName
+    if not websockets:
+        print('Bye!')
+        line = '****LEAVE****'
+        student1 = db.collection('chatroom').document(userName).delete()
+        time.sleep(2)
+        os._exit(0)
+
 
 
 @eel.expose
 def app_init():
     global port
     eel.init('web')
-    eel.start('login.html', size=(800,600), port=port, mode='chrome-app')
+    eel.start('login.html', size=(800,600), port=port, mode='chrome-app', close_callback=close_callback)
 
 if __name__ ==  '__main__':
     app_init()
