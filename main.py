@@ -28,6 +28,8 @@ from firebase_admin import firestore
 userName = ""
 userLang = ""
 
+port = random.randint(5000,65535)
+
 r = sr.Recognizer()
 mic = sr.Microphone()
 
@@ -157,13 +159,14 @@ def on_release():
     re.save()
     t=recordtext()
     eel.showText(t)
-    
-    
-    
+
+
+
 @eel.expose
 def app_init():
-    eel.init('web') #
-    eel.start('login.html',size = (800,600)) 
+    global port
+    eel.init('web')
+    eel.start('login.html', size=(800,600), port=port, mode='chrome-app')
 
 if __name__ ==  '__main__':
     app_init()
