@@ -82,7 +82,20 @@ def get_message(message):
             'message': tempMsg,
             'time':loc_dt.strftime("%Y:%m:%d:%H:%M:%S")
         })
-        eel.update('[ '+f_loc_dt+' ]'+' '+userName+' : '+message)
+        eel.update('[' + f_loc_dt + ']' + ' ' + userName + ' : ' + message)
+        
+@eel.expose
+def on_press():
+    print("Record button pressed")
+    # re.start()
+
+@eel.expose
+def on_release():
+    print("Record button released")
+    # re.stop()
+    # re.save()
+    # t=recordtext()
+    # eel.showText(t)
     
     
     
