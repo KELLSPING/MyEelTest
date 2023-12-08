@@ -108,8 +108,8 @@ def process_user_input(user_input_name, user_lang_select):
 @eel.expose   
 def nameAlreadyExist(name):
     lst_id=[i.id for i in db.collection('chatroom').get()]
+    print(lst_id)
     for i in lst_id:
-        print(lst_id)
         if i == name:
             print("Duplicate name")
             return True
