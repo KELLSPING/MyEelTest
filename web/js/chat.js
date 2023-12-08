@@ -62,14 +62,6 @@ async function send_message(){
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   }
-
-
-
-eel.expose(close_browser);
-function close_browser(){
-    window.close()
-}
-  
   
   function mouseDown(){
       var button = document.getElementById('btn-send-audio');
@@ -120,4 +112,9 @@ function close_browser(){
     // Add event listener for window resize
     window.addEventListener('resize', updateFontSize);
   }
+
+window.onbeforeunload = function() {
+  // This function will be called when the page is about to be closed
+  eel.close_chat();  // Call the Python function
+};
   

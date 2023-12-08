@@ -27,3 +27,8 @@ function checkAndRedirect() {
         window.location.href = "chat.html?userLangSelect=" + encodeURIComponent(selectLang) + "&userInputName=" + encodeURIComponent(inputName);
     }
 }
+
+window.onbeforeunload = function() {
+    // This function will be called when the page is about to be closed
+    eel.close_login();  // Call the Python function
+  };

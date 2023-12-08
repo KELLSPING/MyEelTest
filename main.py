@@ -160,16 +160,19 @@ def on_release():
     t=recordtext()
     eel.showText(t)
 
-def close_callback(route, websockets):
+@eel.expose
+def close_login():
     global userName
-    if not websockets:
-        print('Bye!')
-        line = '****LEAVE****'
-        student1 = db.collection('chatroom').document(userName).delete()
-        time.sleep(2)
-        os._exit(0)
-
-
+    print('Bye login.html!')
+    db.collection('chatroom').document(userName).delete()
+    time.sleep(2)
+        
+@eel.expose
+def close_chat():
+    global userName
+    print('Bye chat.html!')
+    db.collection('chatroom').document(userName).delete()
+    time.sleep(2)
 
 @eel.expose
 def app_init():
