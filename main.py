@@ -54,6 +54,37 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 
+# Create a callback on_snapshot function to capture changes
+def on_snapshot(col_snapshot, changes, read_time):
+    global userName, userLang
+    for change in changes:
+        if change.type.name == 'ADDED':
+            content = '[ **System Info** ]: '+u'{} join the chatroom'.format(change.document.id)
+        elif change.type.name == 'MODIFIED':
+            data = db.collection('chatroom').document(change.document.id).get().to_dict()
+            content = u'{} : {}'.format(change.document.id,data['message'])
+        elif change.type.name == 'REMOVED':
+            content = '[ **System Info** ]: '+u'{} leave the chatroom'.format(change.document.id)
+            
+        user_name = content.split(':')[0]
+        info_txt = content.replace(user_name+':','')
+        
+        if user_name == '[ **System Info** ]':
+                translator = Translator()
+                join_name = info_txt.replace(' join the chatroom!','').replace(' leave the chatroom!','')
+                info_txt = info_txt.replace(join_name,'')
+                translation = translator.translate(info_txt, dest=userLang)
+                info_txt = join_name+translation.text
+
+        elif user_name.strip() != userName :
+            translator = Translator()
+            translation = translator.translate(info_txt, dest=userLang)
+            info_txt = translation.text
+            
+        print(info_txt)
+    
+
+
 class Recorder:
     def __init__(self, chunk=1024, channels=1, rate=16000):
         self.CHUNK = chunk
@@ -95,6 +126,21 @@ class Recorder:
         wf.writeframes(b''.join(self._frames))
         wf.close()
 
+def process_language_to_briefCode(lang):
+    if lang == 'English':
+        return "en"
+    elif lang == 'Spanish':
+        return "es"
+    elif lang == "Traditional Chinese":
+        return "zh-tw"
+    elif lang == "Simplified Chinese":
+        return "zh-cn"
+    elif lang == "Japanese":
+        return "ja"
+    elif lang == "Korean":
+        return "ko"
+    else:
+        return "en"
 
 @eel.expose
 def process_user_input(user_input_name, user_lang_select):
@@ -104,6 +150,7 @@ def process_user_input(user_input_name, user_lang_select):
     userLang = user_lang_select
     print(f"User input name: {user_input_name}")
     print(f"User language selection: {user_lang_select}")
+    userLang = process_language_to_briefCode(userLang)
 
 @eel.expose   
 def nameAlreadyExist(name):
@@ -181,12 +228,22 @@ def close_chat():
     print('Bye chat.html!')
     db.collection('chatroom').document(userName).delete()
     time.sleep(1)
+    
+def read_server():
+    #col_query = db.collection(u'cities').where(u'state', u'==', u'CA')
+    col_query = db.collection(u'chatroom')
+    # Watch the collection query
+    query_watch = col_query.on_snapshot(on_snapshot)
+    
 
 @eel.expose
 def app_init():
     global port
     eel.init('web')
+    if userName != '' and userLang != '':
+        threading.Thread(target = read_server).start()
     eel.start('login.html', size=(800,600), port=port, mode='chrome-app')
+    
 
 if __name__ ==  '__main__':
     app_init()
