@@ -51,5 +51,7 @@ async function checkNameExist(inputName, selectLang) {
       encodeURIComponent(selectLang) +
       "&userInputName=" +
       encodeURIComponent(inputName);
+
+      
   }
 }
