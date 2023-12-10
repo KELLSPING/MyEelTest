@@ -49,6 +49,26 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 
+class ServerReader(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        self.exit_flag = False
+
+    def run(self):
+        if not self.exit_flag:
+            # Do some work, such as reading from the server
+            # print("Reading from server...")
+            read_server()
+            time.sleep(1)
+
+    def stop(self):
+        self.exit_flag = True
+ 
+ 
+# Create an instance of the ServerReader class
+server_reader = ServerReader()
+
+
 # Create a callback on_snapshot function to capture changes
 def on_snapshot(col_snapshot, changes, read_time):
     global userName, userLang
@@ -64,7 +84,7 @@ def on_snapshot(col_snapshot, changes, read_time):
             
         user_name = content.split(':')[0]
         info_txt = content.replace(user_name+':','')
-        print("Herer   ~~" + userLang)
+        
         if user_name == '[ **System Info** ]':
                 translator = Translator()
                 join_name = info_txt.replace(' join the chatroom!','').replace(' leave the chatroom!','')
@@ -142,22 +162,6 @@ class Recorder:
         wf.writeframes(b''.join(self._frames))
         wf.close()
 
-def process_language_to_briefCode(lang):
-    if lang == 'English':
-        return "en"
-    elif lang == 'Spanish':
-        return "es"
-    elif lang == "Traditional Chinese":
-        return "zh-tw"
-    elif lang == "Simplified Chinese":
-        return "zh-cn"
-    elif lang == "Japanese":
-        return "ja"
-    elif lang == "Korean":
-        return "ko"
-    else:
-        return "en"
-
 @eel.expose
 def process_user_input(user_input_name, user_lang_select):
     global userName
@@ -166,7 +170,6 @@ def process_user_input(user_input_name, user_lang_select):
     userLang = user_lang_select
     print(f"User input name: {user_input_name}")
     print(f"User language selection: {user_lang_select}")
-    userLang = process_language_to_briefCode(userLang)
     
     loc_dt =datetime.today()
     student1 = db.collection('chatroom').document(userName)
@@ -176,10 +179,13 @@ def process_user_input(user_input_name, user_lang_select):
     })
     
     if userName != '' and userLang != '':
-        print('here')
-        threading.Thread(target = read_server).start()
+        # avoid start the thread second time
+        try:
+            server_reader.start()
+        except RuntimeError as e:
+            print(f"Thread already start.")
     else:
-        print('here2')
+        print('userName or userLang is null')
 
 @eel.expose   
 def nameAlreadyExist(name):
@@ -255,6 +261,10 @@ def close_login():
 def close_chat():
     global userName
     print('Bye chat.html!')
+    # Call the stop method to stop the thread
+    server_reader.stop()
+    # Wait for the thread to complete
+    server_reader.join()
     db.collection('chatroom').document(userName).delete()
     time.sleep(1)
     
