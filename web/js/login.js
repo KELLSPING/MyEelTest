@@ -24,8 +24,19 @@ function checkAndRedirect() {
     result = '"Name" is too long.';
     document.getElementById("pError").innerText = result;
   } else {
-    // check name exist or not
-    checkNameExist(inputName, selectLang);
+
+    if (navigator.onLine) {
+      // 如果在线，执行跳转等操作
+      console.log('Button clicked, online');
+      // Add your logic for redirection or other actions here
+      // check name exist or not
+      checkNameExist(inputName, selectLang);
+    } else {
+      // 如果离线，不执行跳转等操作
+      console.log('Button clicked, offline');
+      document.getElementById("pError").innerText = 'Internet Disconnected';
+    }
+    
   }
 }
 
