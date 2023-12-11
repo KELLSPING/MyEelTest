@@ -37,6 +37,12 @@ window.onbeforeunload = function () {
 async function checkNameExist(inputName, selectLang) {
   var result = "";
 
+  var button = document.getElementById('btnCommit');
+  var spinner = document.getElementById('loading-spinner');
+
+  button.style.visibility = 'hidden';
+  spinner.style.display = 'block';
+
   // 等待 1 秒，作為檢查資料庫中使否依樣名字的等待時間
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -46,13 +52,21 @@ async function checkNameExist(inputName, selectLang) {
     result = '"Name" is already exist.';
     document.getElementById("pError").innerText = result;
   } else {
+    // 启用按钮
+    button.disabled = false;
+
     window.location.href =
       "chat.html?userLangSelect=" +
       encodeURIComponent(selectLang) +
       "&userInputName=" +
       encodeURIComponent(inputName);
 
-      
+    setTimeout(function() {
+        // 显示按钮，隐藏加载圈
+        button.style.visibility = 'visible';
+        spinner.style.display = 'none';
+      }, 1000);
+    
   }
 }
 
