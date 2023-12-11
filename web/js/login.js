@@ -77,8 +77,10 @@ window.addEventListener('online', async function() {
 
   console.log(message);
 
+  var inputName = document.getElementById("nameInput").value.trim();
+
   await eel.get_internet_status('connect')();
-  await eel.clean_user()();
+  await eel.clean_user(inputName)();
 
   var customAlert = document.getElementById('custom-alert');
         customAlert.innerHTML = message;

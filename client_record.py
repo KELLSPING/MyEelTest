@@ -275,16 +275,16 @@ def close_chat():
     global userName
     print('Bye chat.html!')
     # Call the stop method to stop the thread
-    server_reader.stop()
+    # server_reader.stop()
     # Wait for the thread to complete
-    server_reader.join()
+    # server_reader.join()
     db.collection('chatroom').document(userName).delete()
     time.sleep(1)
     
 @eel.expose
-def clean_user():
-    print(f'clean_user : {userName}')
-    db.collection('chatroom').document(userName).delete()
+def clean_user(inputName):
+    print(f'clean_user : {inputName}')
+    db.collection('chatroom').document(inputName).delete()
     
 def speak(sentence, lang, loops=1):
     with tempfile.NamedTemporaryFile(delete=True) as fp: 
