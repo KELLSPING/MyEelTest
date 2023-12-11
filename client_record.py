@@ -117,7 +117,7 @@ def on_snapshot(col_snapshot, changes, read_time):
         print('['+str(curtime)+']'+' '+user_name+':'+info_txt)
 
         #here gtts
-        if (user_name.strip() != userName) and (user_name != '[ **System Info** ]' ) :
+        if (user_name.strip() != userName) and (user_name != '[ **System Info** ]' and userName != '') :
             speak(info_txt,userLang)
     
 
@@ -279,6 +279,7 @@ def close_chat():
     # Wait for the thread to complete
     # server_reader.join()
     db.collection('chatroom').document(userName).delete()
+    userName = ''
     time.sleep(1)
     
 @eel.expose
