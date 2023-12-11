@@ -281,6 +281,11 @@ def close_chat():
     db.collection('chatroom').document(userName).delete()
     time.sleep(1)
     
+@eel.expose
+def clean_user():
+    print(f'clean_user : {userName}')
+    db.collection('chatroom').document(userName).delete()
+    
 def speak(sentence, lang, loops=1):
     with tempfile.NamedTemporaryFile(delete=True) as fp: 
         if len(sentence.replace(' ',''))!=0:

@@ -71,11 +71,14 @@ async function checkNameExist(inputName, selectLang) {
 }
 
 // Internet event listener : Reconnected
-window.addEventListener('online', function() {
+window.addEventListener('online', async function() {
   console.log("Internet connected.");
   message = 'Internet Reconnected.'
 
   console.log(message);
+
+  await eel.get_internet_status('connect')();
+  await eel.clean_user()();
 
   var customAlert = document.getElementById('custom-alert');
         customAlert.innerHTML = message;
@@ -83,17 +86,18 @@ window.addEventListener('online', function() {
         customAlert.style.color = 'green';
         customAlert.style.borderColor  = 'green';
         
-
         setTimeout(function() {
             customAlert.style.display = 'none';
         }, 3000); // Hide after 2 seconds (adjust as needed)
 });
 
 // Internet event listener : disconnected
-window.addEventListener('offline', function() {
+window.addEventListener('offline', async function() {
   message = 'Internet Disconnected.'
 
   console.log(message);
+
+  await eel.get_internet_status('disconnect')();
 
   var customAlert = document.getElementById('custom-alert');
         customAlert.innerHTML = message;
