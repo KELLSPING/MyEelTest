@@ -55,3 +55,13 @@ async function checkNameExist(inputName, selectLang) {
       
   }
 }
+
+// Internet event listener : connected
+window.addEventListener('online', function() {
+  console.log("Internet connected.");
+});
+
+// Internet event listener : disconnected
+window.addEventListener('offline', function() {
+  console.log("Internet disconnected.");
+});
