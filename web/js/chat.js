@@ -118,3 +118,36 @@ window.onbeforeunload = function () {
   // This function will be called when the page is about to be closed
   eel.close_chat(); // Call the Python function
 };
+
+// Internet event listener : Reconnected
+window.addEventListener('online', function() {
+  console.log("Internet connected.");
+  message = 'Internet Reconnected.'
+
+  console.log(message);
+
+  var customAlert = document.getElementById('custom-alert');
+        customAlert.innerHTML = message;
+        customAlert.style.display = 'block';
+        customAlert.style.color = 'green';
+        customAlert.style.borderColor  = 'green';
+
+        setTimeout(function() {
+            customAlert.style.display = 'none';
+        }, 3000); // Hide after 2 seconds (adjust as needed)
+});
+
+// Internet event listener : disconnected
+window.addEventListener('offline', function() {
+  message = 'Internet Disconnected.'
+
+  console.log(message);
+
+  var customAlert = document.getElementById('custom-alert');
+        customAlert.innerHTML = message;
+        customAlert.style.display = 'block';
+
+        setTimeout(function() {
+            customAlert.style.display = 'none';
+        }, 3000); // Hide after 2 seconds (adjust as needed)
+});

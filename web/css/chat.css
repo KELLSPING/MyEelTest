@@ -76,6 +76,19 @@ body {
     width: 20px; /* 設定圖示寬度 */
     height: 20px; /* 設定圖示高度 */
   }
+
+  #custom-alert {
+    color: red;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 2px solid red;  /* 修改边框样式和颜色 */
+    border-radius: 5px;
+}
   
   /* Media queries for responsive design */
   

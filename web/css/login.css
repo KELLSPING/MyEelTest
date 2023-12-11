@@ -29,8 +29,8 @@ select, input[type="text"] {
     transform: translate(-50%, -50%);
     background: #fff;
     padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid red;  /* 修改边框样式和颜色 */
+    border-radius: 5px;
 }
 
 

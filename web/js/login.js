@@ -56,7 +56,7 @@ async function checkNameExist(inputName, selectLang) {
   }
 }
 
-// Internet event listener : connected
+// Internet event listener : Reconnected
 window.addEventListener('online', function() {
   console.log("Internet connected.");
   message = 'Internet Reconnected.'
@@ -66,7 +66,9 @@ window.addEventListener('online', function() {
   var customAlert = document.getElementById('custom-alert');
         customAlert.innerHTML = message;
         customAlert.style.display = 'block';
-        customAlert.style.color = 'green'
+        customAlert.style.color = 'green';
+        customAlert.style.borderColor  = 'green';
+        
 
         setTimeout(function() {
             customAlert.style.display = 'none';
