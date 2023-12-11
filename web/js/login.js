@@ -59,9 +59,31 @@ async function checkNameExist(inputName, selectLang) {
 // Internet event listener : connected
 window.addEventListener('online', function() {
   console.log("Internet connected.");
+  message = 'Internet Reconnected.'
+
+  console.log(message);
+
+  var customAlert = document.getElementById('custom-alert');
+        customAlert.innerHTML = message;
+        customAlert.style.display = 'block';
+        customAlert.style.color = 'green'
+
+        setTimeout(function() {
+            customAlert.style.display = 'none';
+        }, 3000); // Hide after 2 seconds (adjust as needed)
 });
 
 // Internet event listener : disconnected
 window.addEventListener('offline', function() {
-  console.log("Internet disconnected.");
+  message = 'Internet Disconnected.'
+
+  console.log(message);
+
+  var customAlert = document.getElementById('custom-alert');
+        customAlert.innerHTML = message;
+        customAlert.style.display = 'block';
+
+        setTimeout(function() {
+            customAlert.style.display = 'none';
+        }, 3000); // Hide after 2 seconds (adjust as needed)
 });
