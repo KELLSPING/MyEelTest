@@ -11,6 +11,18 @@ body {
     border-radius: 5px;
     overflow: hidden;
   }
+
+  #txtName {
+    margin-left: 45px;
+    font-weight: normal;
+    font-size: 20px;
+  }
+
+  #txtLanguage {
+    margin-left: 45px;
+    font-weight: normal;
+    font-size: 20px;
+  }
   
   #chat-messages {
     padding: 10px;

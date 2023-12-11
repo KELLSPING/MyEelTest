@@ -4,8 +4,8 @@ const userInputName = urlParams.get("userInputName");
 const userLangSelect = urlParams.get("userLangSelect");
 
 // 顯示名字和語言在 chat.html
-// document.getElementById('txtName').innerText  = userInputName;
-// document.getElementById('txtLanguage').innerText  = userLangSelect;
+document.getElementById('txtName').innerText  = userInputName;
+document.getElementById('txtLanguage').innerText  = userLangSelect;
 
 eel.process_user_input(userInputName, userLangSelect);
 
