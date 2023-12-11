@@ -20,8 +20,9 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-userName = ""
-userLang = ""
+userName = ''
+userLang = ''
+internet_status = 'connect'
 
 port = random.randint(5000,65535)
 
@@ -198,28 +199,40 @@ def nameAlreadyExist(name):
     print("Good naming")
     return False
 
+
+@eel.expose
+def get_internet_status(message):
+    global internet_status
+    internet_status = message
+    
     
 @eel.expose
 def get_message(message):
-    global userName, userLang
+    global userName, userLang, internet_status
     tempMsg = message
+    
+    if (internet_status == 'connect'):
 
-    if (tempMsg == 'sudo_clean_all_users'):
-        print("sudo_clean_all_users")
-        lst_id=[i.id for i in db.collection('chatroom').get()]
-        for i in lst_id:
-            if i!=userName:
-                db.collection('chatroom').document(i).delete()
+        if (tempMsg == 'sudo_clean_all_users'):
+            print("sudo_clean_all_users")
+            lst_id=[i.id for i in db.collection('chatroom').get()]
+            for i in lst_id:
+                if i!=userName:
+                    db.collection('chatroom').document(i).delete()
+            
+        else:
+            loc_dt = datetime.today()
+            f_loc_dt = loc_dt.strftime("%Y:%m:%d %H:%M:%S")
+            print("[" + f_loc_dt + "] " + userName + " : " + message)
+            student1 = db.collection('chatroom').document(userName)
+            student1.set({
+                'message': tempMsg,
+                'time':loc_dt.strftime("%Y:%m:%d:%H:%M:%S")
+            })
+            
+    else :
+        print('Please check your internet')
         
-    else:
-        loc_dt = datetime.today()
-        f_loc_dt = loc_dt.strftime("%Y:%m:%d %H:%M:%S")
-        print("[" + f_loc_dt + "] " + userName + " : " + message)
-        student1 = db.collection('chatroom').document(userName)
-        student1.set({
-            'message': tempMsg,
-            'time':loc_dt.strftime("%Y:%m:%d:%H:%M:%S")
-        })
         
         
 def recordtext():

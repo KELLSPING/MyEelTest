@@ -1,3 +1,5 @@
+internet_status = 'Internet connected'
+
 // 获取 URL 中的查询参数
 const urlParams = new URLSearchParams(window.location.search);
 const userInputName = urlParams.get("userInputName");
@@ -28,23 +30,26 @@ async function send_message() {
   var messageInput = document.getElementById("message-input");
   var message = messageInput.value.trim();
 
-  if (message !== "") {
-    // 呼叫 eel 中的 func ，func 名稱後面的 () 作為輸入參數用，最後的 () 用作取值，並將結果回傳在 result
-    result = await eel.get_message(message)();
-
-    var chatMessages = document.getElementById("chat-messages");
-    var newMessage = document.createElement("div");
-    newMessage.textContent = result;
-
-    // 使用 JS 實現文字隨視窗大小縮放
-    setResponsiveFontSize(newMessage, "16px");
-
-    chatMessages.appendChild(newMessage);
-    // Clear the input field
-    messageInput.value = "";
-    // Scroll to the bottom to show the latest message
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+  if (internet_status != 'Internet Disconnected') {
+    if (message !== "") {
+      // 呼叫 eel 中的 func ，func 名稱後面的 () 作為輸入參數用，最後的 () 用作取值，並將結果回傳在 result
+      result = await eel.get_message(message)();
+  
+      var chatMessages = document.getElementById("chat-messages");
+      var newMessage = document.createElement("div");
+      newMessage.textContent = result;
+  
+      // 使用 JS 實現文字隨視窗大小縮放
+      setResponsiveFontSize(newMessage, "16px");
+  
+      chatMessages.appendChild(newMessage);
+      // Clear the input field
+      messageInput.value = "";
+      // Scroll to the bottom to show the latest message
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
   }
+  
 }
 
 eel.expose(update);
@@ -120,14 +125,15 @@ window.onbeforeunload = function () {
 };
 
 // Internet event listener : Reconnected
-window.addEventListener('online', function() {
-  console.log("Internet connected.");
-  message = 'Internet Reconnected.'
+window.addEventListener('online', async function() {
+  internet_status = 'Internet Reconnected.'
 
-  console.log(message);
+  console.log(internet_status);
+
+  await eel.get_internet_status('connect')();
 
   var customAlert = document.getElementById('custom-alert');
-        customAlert.innerHTML = message;
+        customAlert.innerHTML = internet_status;
         customAlert.style.display = 'block';
         customAlert.style.color = 'green';
         customAlert.style.borderColor  = 'green';
@@ -138,13 +144,15 @@ window.addEventListener('online', function() {
 });
 
 // Internet event listener : disconnected
-window.addEventListener('offline', function() {
-  message = 'Internet Disconnected.'
+window.addEventListener('offline', async function() {
+  internet_status = 'Internet Disconnected'
 
-  console.log(message);
+  console.log(internet_status);
+
+  await eel.get_internet_status('disconnect')();
 
   var customAlert = document.getElementById('custom-alert');
-        customAlert.innerHTML = message;
+        customAlert.innerHTML = internet_status;
         customAlert.style.display = 'block';
 
         setTimeout(function() {
