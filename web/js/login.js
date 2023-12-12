@@ -88,6 +88,8 @@ window.addEventListener('online', async function() {
 
   console.log(message);
 
+  document.getElementById("pError").innerText = '';
+
   var inputName = document.getElementById("nameInput").value.trim();
 
   await eel.get_internet_status('connect')();
