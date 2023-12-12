@@ -154,6 +154,8 @@ window.addEventListener('offline', async function() {
   var customAlert = document.getElementById('custom-alert');
         customAlert.innerHTML = internet_status;
         customAlert.style.display = 'block';
+        customAlert.style.color = 'red';
+        customAlert.style.borderColor  = 'red';
 
         setTimeout(function() {
             customAlert.style.display = 'none';
